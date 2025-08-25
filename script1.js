@@ -1,87 +1,95 @@
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  scroll-behavior: smooth;
-}
+// Data (JS controls most of the site)
+const data = {
+  home: {
+    title: "Welcome to Event Management System",
+    content: "Plan, Organize & Manage Events Seamlessly"
+  },
+  about: {
+    title: "About Us",
+    content: "We create unforgettable experiences with world-class event management."
+  },
+  schedule: {
+    title: "Event Schedule",
+    items: [
+      { time: "10:00 AM", event: "Registration & Welcome" },
+      { time: "11:00 AM", event: "Opening Ceremony" },
+      { time: "1:00 PM", event: "Workshop: Event Marketing" },
+      { time: "3:00 PM", event: "Panel Discussion" },
+      { time: "5:00 PM", event: "Closing Ceremony" }
+    ]
+  },
+  speakers: {
+    title: "Meet Our Speakers",
+    items: [
+      { name: "Alice Johnson", desc: "Expert in Event Tech & Logistics" },
+      { name: "Michael Lee", desc: "Marketing Guru & Influencer" },
+      { name: "Sophia Patel", desc: "Event Finance & Sponsorship Specialist" }
+    ]
+  },
+  contact: {
+    title: "Contact Us",
+    form: `
+      <form id='contactForm'>
+        <input type='text' placeholder='Your Name' required>
+        <input type='email' placeholder='Your Email' required>
+        <textarea placeholder='Message'></textarea>
+        <button type='submit'>Send</button>
+      </form>
+    `
+  }
+};
 
-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background: #222;
-  padding: 15px;
-  z-index: 1000;
-}
+// Render sections dynamically
+function renderSections() {
+  for (let id in data) {
+    const section = document.getElementById(id);
+    const info = data[id];
 
-nav ul {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  gap: 30px;
-}
+    let html = `<h1>${info.title}</h1>`;
+    if (info.content) html += `<p>${info.content}</p>`;
 
-nav a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  transition: 0.3s;
-}
+    // Special: schedule list
+    if (info.items && id === "schedule") {
+      html += "<div>";
+      info.items.forEach(item => {
+        html += `<div class='card'><b>${item.time}</b> - ${item.event}</div>`;
+      });
+      html += "</div>";
+    }
 
-nav a:hover {
-  color: orange;
-}
+    // Special: speakers
+    if (info.items && id === "speakers") {
+      html += "<div style='display:flex;gap:20px;flex-wrap:wrap;justify-content:center'>";
+      info.items.forEach(sp => {
+        html += `<div class='card' onclick='openModal("${sp.name}", "${sp.desc}")'>${sp.name}</div>`;
+      });
+      html += "</div>";
+    }
 
-section {
-  min-height: 100vh;
-  padding: 80px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-}
+    // Contact form
+    if (info.form) html += info.form;
 
-#home { background: linear-gradient(to right, #ff7e5f, #feb47b); color: white; }
-#about { background: #f1f1f1; }
-#schedule { background: #d1e8e4; }
-#speakers { background: #f9f7d9; }
-#contact { background: #e8def8; }
-
-.card {
-  background: white;
-  padding: 20px;
-  margin: 15px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  cursor: pointer;
-  transition: 0.3s;
+    section.innerHTML = html;
+  }
 }
+renderSections();
 
-.card:hover {
-  transform: scale(1.05);
-}
+// Modal handling
+const modal = document.getElementById("modal");
+const modalTitle = document.getElementById("modalTitle");
+const modalDesc = document.getElementById("modalDesc");
+const closeModal = document.getElementById("closeModal");
 
-/* Modal */
-.modal {
-  display: none;
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.7);
-  justify-content: center;
-  align-items: center;
+function openModal(title, desc) {
+  modal.style.display = "flex";
+  modalTitle.innerText = title;
+  modalDesc.innerText = desc;
 }
+closeModal.onclick = () => modal.style.display = "none";
+window.onclick = e => { if (e.target === modal) modal.style.display = "none"; };
 
-.modal-content {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  width: 400px;
-  text-align: center;
-}
-
-#closeModal {
-  float: right;
-  font-size: 20px;
-  cursor: pointer;
-}
+// Contact form handler
+document.addEventListener("submit", e => {
+  e.preventDefault();
+  alert("✅ Thank you! Your message has been sent.");
+});
