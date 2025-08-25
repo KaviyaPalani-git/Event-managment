@@ -1,86 +1,87 @@
-// Smooth scroll
-function scrollToSection(id) {
-  document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  scroll-behavior: smooth;
 }
 
-// Active menu highlight
-const sections = document.querySelectorAll("section");
-const navLinks = document.querySelectorAll(".nav-links a");
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #222;
+  padding: 15px;
+  z-index: 1000;
+}
 
-window.addEventListener("scroll", () => {
-  let current = "";
-  sections.forEach((section) => {
-    const sectionTop = section.offsetTop - 80;
-    if (pageYOffset >= sectionTop) {
-      current = section.getAttribute("id");
-    }
-  });
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
 
-  navLinks.forEach((link) => {
-    link.classList.remove("active");
-    if (link.getAttribute("href") === "#" + current) {
-      link.classList.add("active");
-    }
-  });
-});
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
 
-// Back to Top
-const backToTop = document.getElementById("backToTop");
-window.addEventListener("scroll", () => {
-  if (window.scrollY > 200) backToTop.style.display = "block";
-  else backToTop.style.display = "none";
-});
-backToTop.addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
-});
+nav a:hover {
+  color: orange;
+}
 
-// Schedule search
-const scheduleItems = document.querySelectorAll("#schedule li");
-const searchInput = document.getElementById("scheduleSearch");
+section {
+  min-height: 100vh;
+  padding: 80px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
 
-searchInput.addEventListener("keyup", () => {
-  const text = searchInput.value.toLowerCase();
-  scheduleItems.forEach((item) => {
-    item.style.display = item.textContent.toLowerCase().includes(text)
-      ? "block"
-      : "none";
-  });
-});
+#home { background: linear-gradient(to right, #ff7e5f, #feb47b); color: white; }
+#about { background: #f1f1f1; }
+#schedule { background: #d1e8e4; }
+#speakers { background: #f9f7d9; }
+#contact { background: #e8def8; }
 
-// Speakers modal
-const modal = document.getElementById("modal");
-const modalName = document.getElementById("modalName");
-const modalBio = document.getElementById("modalBio");
-const closeModal = document.getElementById("closeModal");
+.card {
+  background: white;
+  padding: 20px;
+  margin: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: 0.3s;
+}
 
-document.querySelectorAll(".speaker-card").forEach((card) => {
-  card.addEventListener("click", () => {
-    modalName.textContent = card.dataset.name;
-    modalBio.textContent = card.dataset.bio;
-    modal.style.display = "flex";
-  });
-});
-closeModal.addEventListener("click", () => (modal.style.display = "none"));
-window.addEventListener("click", (e) => {
-  if (e.target == modal) modal.style.display = "none";
-});
+.card:hover {
+  transform: scale(1.05);
+}
 
-// Contact form validation
-document.getElementById("contactForm").addEventListener("submit", (e) => {
-  e.preventDefault();
-  const name = e.target[0].value.trim();
-  const email = e.target[1].value.trim();
-  const msg = e.target[2].value.trim();
-  const formMessage = document.getElementById("formMessage");
+/* Modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.7);
+  justify-content: center;
+  align-items: center;
+}
 
-  if (name.length < 3)
-    return (formMessage.textContent = "Name must be at least 3 characters!");
-  if (!/^[^ ]+@[^ ]+\.[a-z]{2,3}$/.test(email))
-    return (formMessage.textContent = "Invalid email!");
-  if (msg.length < 10)
-    return (formMessage.textContent = "Message must be at least 10 chars!");
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  text-align: center;
+}
 
-  formMessage.textContent = "✅ Message sent successfully!";
-  formMessage.style.color = "green";
-  e.target.reset();
-});
+#closeModal {
+  float: right;
+  font-size: 20px;
+  cursor: pointer;
+}
