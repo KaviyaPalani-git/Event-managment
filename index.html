@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Event Management System</title>
+    <link rel="stylesheet" href="style1.css" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <header>
+      <nav>
+        <h1 class="logo">EventX</h1>
+        <ul class="nav-links">
+          <li><a href="#home" class="active">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#schedule">Schedule</a></li>
+          <li><a href="#speakers">Speakers</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Home -->
+    <section id="home" class="hero">
+      <h2>Welcome to EventX 2025</h2>
+      <p>The ultimate platform for modern tech events and conferences.</p>
+      <button onclick="scrollToSection('about')">Explore More</button>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+      <h2>About EventX</h2>
+      <p>
+        EventX is a professional event management system designed to bring
+        people together. From tech conferences to cultural programs, we ensure
+        everything runs smoothly.
+      </p>
+    </section>
+
+    <!-- Schedule -->
+    <section id="schedule">
+      <h2>Event Schedule</h2>
+      <input type="text" id="scheduleSearch" placeholder="Search sessions..." />
+      <ul type="circle" >
+        <li>Day 1 - Web Development Workshop</li>
+        <li>Day 1 - Cloud Computing Seminar</li>
+        <li>Day 2 - AI & Machine Learning Panel</li>
+        <li>Day 2 - Cyber Security Discussion</li>
+        <li>Day 3 - Networking & Closing Ceremony</li>
+      </ul>
+    </section>
+
+    <!-- Speakers -->
+    <section id="speakers">
+      <h2>Meet Our Speakers</h2>
+      <div class="speaker-grid">
+        <div
+          class="speaker-card"
+          data-name="Jane Doe"
+          data-bio="Expert Web Developer with 10+ years experience."
+        >
+          <!--         <img src="https://via.placeholder.com/200" alt="Jane">
+ -->
+          <h3>Jane Doe</h3>
+        </div>
+        <div
+          class="speaker-card"
+          data-name="John Smith"
+          data-bio="Cloud Computing Specialist and AWS Trainer."
+        >
+          <!--         <img src="https://via.placeholder.com/200" alt="John"> -->
+          <h3>John Smith</h3>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <h2>Contact Us</h2>
+      <form id="contactForm">
+        <input type="text" placeholder="Your Name" required /><br /><br />
+        <input type="email" placeholder="Your Email" required /><br /><br />
+        <textarea placeholder="Your Message" required></textarea><br /><br />
+        <button type="submit">Send Message</button>
+      </form>
+      <p id="formMessage"></p>
+    </section>
+
+    <!-- Back to Top -->
+    <button id="backToTop">↑</button>
+
+    <!-- Modal -->
+    <div id="modal">
+      <div class="modal-content">
+        <span id="closeModal">&times;</span>
+        <h2 id="modalName"></h2>
+        <p id="modalBio"></p>
+      </div>
+    </div>
+
+    <script src="script1.js"></script>
+  </body>
+</html>
